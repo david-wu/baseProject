@@ -15,3 +15,13 @@ npm install -g http-server
 
 http-server
 ```
+
+for build
+
+```
+gulp build
+
+cd client/dist/build
+
+http-server
+```
