@@ -2,6 +2,7 @@
 
 `
 npm install
+
 gulp
 `
 
@@ -9,6 +10,8 @@ gulp
 
 `
 cd client/dist/proudction
+
 npm install -g http-server
+
 http-server
 `
