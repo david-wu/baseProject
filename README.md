@@ -9,7 +9,7 @@ gulp
 (go to new tab)
 
 ```
-cd client/dist/proudction
+cd client/dist/production
 
 npm install -g http-server
 
