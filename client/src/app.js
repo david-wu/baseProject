@@ -1,4 +1,4 @@
 
 
-console.log('browserified http')
-console.log(require('http'))
+console.log('browserified http', require('http'));
+

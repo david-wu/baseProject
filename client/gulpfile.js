@@ -11,16 +11,15 @@ var minifyCss = require('gulp-minify-css');
 var runSequence = require('run-sequence');
 
 var paths = {
-  watchDir: './client',
-  htmlSrc: './client/index.html',
-  browserifyEntryPoint: './client/src/app.js',
-
-  buildDir: './client/dist/build',
-  productionDir: './client/dist/production',
-
+  scssDir: './src',
+  htmlSrc: './index.html',
+  browserifyEntryPoint: './src/app.js',
+  buildDir: './dist/build',
+  productionDir: './dist/production',
   jsFileName: 'build.js',
   cssFileName: 'style.css',
 };
+
 
 // Copies html and watches for changes
 gulp.task('watchHtml', ['copyHTML'], function(){
@@ -36,17 +35,18 @@ gulp.task('copyHTML', function(){
 
 // Builds .scss files, then watches for changes
 gulp.task('watchScss', ['buildSass'], function(){
-  gulp.watch([paths.watchDir + '/**/*.scss'], ['buildSass']);
+  gulp.watch([paths.scssDir + '/**/*.scss'], ['buildSass']);
 });
 
 gulp.task('buildSass', function(){
-  return gulp.src(paths.watchDir + '/**/*.scss')
+  return gulp.src(paths.scssDir + '/**/*.scss')
     .pipe(sass())
     .pipe(concatCss(paths.cssFileName))
     .pipe(minifyCss({keepBreaks:true}))
     .pipe(gulp.dest(paths.buildDir))
     .pipe(gulp.dest(paths.productionDir));
 });
+
 
 // Browserifies JS files and watches for changes
 gulp.task('watchJs', function() {
@@ -60,7 +60,6 @@ gulp.task('watchJs', function() {
   }))
 
   return watcher.on('update', function(){
-    console.log('JS updated, copying HTML and rebundling JS')
     runSequence('copyHTML');
     watcher
       .bundle(logErrorToHtml)
@@ -98,6 +97,4 @@ gulp.task('buildUglyJs', function(){
 
 gulp.task('default', ['watchHtml', 'watchJs', 'watchScss']);
 gulp.task('build', ['copyHTML', 'buildUglyJs', 'buildSass']);
-
-
 
